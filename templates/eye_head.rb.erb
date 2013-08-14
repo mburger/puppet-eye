@@ -1,0 +1,11 @@
+# This File is managed by Puppet
+
+Eye.config do
+  logger '/var/log/eye.log'
+end
+
+Eye.application '<%= scope.lookupvar('::fqdn') %>' do
+  trigger :flapping, :times => 10, :within => 5.minute, :retry_in => 15.minutes
+  check :cpu, :below => 100, :times => [3,5], :every => 5.seconds
+  start_grace 10.seconds
+  stop_grace 10.seconds

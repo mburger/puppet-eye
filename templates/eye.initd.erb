@@ -1,0 +1,45 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides: eye
+# Required-Start: $local_fs $remote_fs $network $syslog $time
+# Required-Stop: $local_fs $remote_fs $network $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: eye daemon, providing process monitoring
+# Description: eye is a monitoring tool. More info at https://github.com/kostya/eye
+### END INIT INFO
+
+PATH="/usr/local/bin:/usr/local/rbenv/shims:$PATH"
+
+EYE_BIN=`which eye`
+test -x $EYE_BIN || { echo "$EYE_BIN not installed";
+        if [ "$1" = "stop" ]; then exit 0;
+        else exit 5; fi; }
+
+EYE_CONFIG=<%= scope.lookupvar('eye::config_file') %>
+test -r $EYE_CONFIG || { echo "$EYE_CONFIG not existing";
+        if [ "$1" = "stop" ]; then exit 0;
+        else exit 6; fi; }
+
+case "$1" in
+  start)
+    echo "Starting eye "
+    $EYE_BIN load $EYE_CONFIG
+    ;;
+  stop)
+    echo "Shutting down eye "
+    $EYE_BIN quit
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  status)
+    $EYE_BIN info
+  ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
