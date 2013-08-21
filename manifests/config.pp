@@ -44,6 +44,7 @@ class eye::config ( ) {
     mode    => $eye::config_file_mode,
     owner   => $eye::config_file_owner,
     group   => $eye::config_file_group,
+    notify  => $eye::manage_service_autorestart,
   }
 
   concat::fragment { 'eye_head':

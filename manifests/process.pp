@@ -5,9 +5,25 @@ define eye::process (
   $startprogram   = '',
   $stopprogram    = '',
   $cycles         = '5',
+  $cpu_below      = '',
+  $cpu_every      = '5',
+  $cpu_times      = [3,5],
+  $memory_below   = '',
+  $memory_every   = '5',
+  $memory_times   = [3,5],
   $enable         = 'true') {
 
   $ensure = bool2ensure($enable)
+
+  $manage_cpu_check = $cpu_below ? {
+    ''      => false,
+    default => true,
+  }
+
+  $manage_memory_check = $memory_below ? {
+    ''      => false,
+    default => true,
+  }
 
   require eye
 
