@@ -5,31 +5,32 @@ define eye::process (
   $startprogram   = '',
   $stopprogram    = '',
   $cycles         = '5',
-  $cpu_below      = '',
-  $cpu_every      = '5',
-  $cpu_times      = [3,5],
-  $memory_below   = '',
-  $memory_every   = '5',
-  $memory_times   = [3,5],
+  $config_hash    = {},
   $enable         = 'true') {
 
   $ensure = bool2ensure($enable)
-
-  $manage_cpu_check = $cpu_below ? {
-    ''      => false,
-    default => true,
-  }
-
-  $manage_memory_check = $memory_below ? {
-    ''      => false,
-    default => true,
-  }
 
   require eye
 
   $real_process = $process ? {
     ''      => $process,
     default => $name,
+  }
+
+  case $config_hash['eye'] {
+    '', undef: {}
+    default: {
+      $eye_config_hash = $config_hash['eye']
+      $checks = $eye_config_hash['checks'] ? {
+        ''      => undef,
+        default => $eye_config_hash['checks']
+      }
+
+      $triggers = $eye_config_hash['triggers'] ? {
+        ''      => undef,
+        default => $eye_config_hash['triggers']
+      }
+    }
   }
 
   $real_pidfile = $pidfile ? {

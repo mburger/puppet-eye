@@ -2,10 +2,14 @@
     pid_file '<%= @real_pidfile %>'
     start_command '<%= @real_startprogram %>'
     stop_command '<%= @real_stopprogram %>'
-<% if @manage_cpu_check -%>
-    check :cpu, :below => <%= @cpu_below %>, :times => <%= @cpu_times.inspect %>, :every => <%= @cpu_every %>.seconds
+<% if @checks && @checks.is_a?(Hash) -%>
+<% @checks.each do |name, params| -%>
+    check :<%= name %><%= params.map {|k,v| ", :#{k} => #{v.inspect}"}.join %>
 <% end -%>
-<% if @manage_memory_check -%>
-    check :memory, :below => <%= @memory_below %>.megabytes, :times => <%= @memory_times.inspect %>, :every => <%= @memory_every %>.seconds
+<% end -%>
+<% if @triggers && @triggers.is_a(Hash) -%>
+<% @triggers.each do |name, params| -%>
+    trigger :<%= name %><%= params.map {|k,v| ", :#{k} => #{v.inspect}"}.join %>
+<% end -%>
 <% end -%>
   end
