@@ -73,8 +73,12 @@ class eye::params {
     default => '/var/run/eye.pid',
   }
 
-  $data_dir = $::operatingsystem ? {
-    default => '/etc/eye/conf.d',
+  $plugin_check_dir = $::operatingsystem ? {
+    default => '/etc/eye/checks',
+  }
+
+  $plugin_trigger_dir = $::operatingsystem ? {
+    default => '/etc/eye/triggers',
   }
 
   $initd_path = $::operatingsystem ? {
@@ -95,6 +99,10 @@ class eye::params {
   $absent = false
   $disable = false
   $disableboot = false
+  $install_plugins = false
+  $install_plugin_dependencies = false
+  $plugin_check_source_dir = 'puppet:///modules/eye/plugins/checks'
+  $plugin_trigger_source_dir = 'puppet:///modules/eye/plugins/triggers'
 
   ### General module variables that can have a site or per module default
   $monitor = false

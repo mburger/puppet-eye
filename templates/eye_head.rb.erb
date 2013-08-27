@@ -1,5 +1,13 @@
 # This File is managed by Puppet
 
+Dir.glob(File.join(File.expand_path(File.dirname(__FILE__)), 'checks/*')).each do |file|
+  require file
+end
+
+Dir.glob(File.join(File.expand_path(File.dirname(__FILE__)), 'triggers/*')).each do |file|
+  require file
+end
+
 Eye.config do
   logger '/var/log/eye.log'
 end

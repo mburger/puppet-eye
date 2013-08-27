@@ -4,12 +4,12 @@
     stop_command '<%= @real_stopprogram %>'
 <% if @checks && @checks.is_a?(Hash) -%>
 <% @checks.each do |name, params| -%>
-    check :<%= name %><%= params.map {|k,v| ", :#{k} => #{v.inspect}"}.join %>
+    check :<%= name %><%= params.sort.map {|k,v| ", :#{k} => #{v.inspect}"}.join %>
 <% end -%>
 <% end -%>
 <% if @triggers && @triggers.is_a(Hash) -%>
 <% @triggers.each do |name, params| -%>
-    trigger :<%= name %><%= params.map {|k,v| ", :#{k} => #{v.inspect}"}.join %>
+    trigger :<%= name %><%= params.sort.map {|k,v| ", :#{k} => #{v.inspect}"}.join %>
 <% end -%>
 <% end -%>
   end

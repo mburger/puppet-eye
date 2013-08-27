@@ -152,8 +152,11 @@
 # [*pid_file*]
 #   Path of pid file. Used by monitor
 #
-# [*data_dir*]
-#   Path of application data directory
+# [*plugin_check_dir*]
+#   Path to the directory containing custom Checks
+#
+# [*plugin_trigger_dir*]
+#   Path to the directory containing custom Triggers
 #
 # See README for usage patterns.
 #
@@ -188,7 +191,12 @@ class eye (
   $config_file_owner   = params_lookup( 'config_file_owner' ),
   $config_file_group   = params_lookup( 'config_file_group' ),
   $pid_file            = params_lookup( 'pid_file' ),
-  $data_dir            = params_lookup( 'data_dir' ),
+  $install_plugins     = params_lookup( 'install_plugins' ),
+  $install_plugin_dependencies = params( 'install_plugin_dependencies' ),
+  $plugin_check_dir    = params_lookup( 'plugin_check_dir' ),
+  $plugin_check_source_dir    = params_lookup( 'plugin_check_source_dir' ),
+  $plugin_trigger_dir  = params_lookup( 'plugin_trigger_dir' ),
+  $plugin_trigger_source_dir  = params_lookup( 'plugin_trigger_source_dir' ),
   $initd_path          = params_lookup( 'initd_path' ),
   $initd_template      = params_lookup( 'initd_template' )
   ) inherits eye::params {
@@ -203,6 +211,8 @@ class eye (
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
   $bool_noops=any2bool($noops)
+  $bool_install_plugins=any2bool($install_plugins)
+  $bool_install_plugin_dependencies=any2bool($install_plugin_dependencies)
 
   ### Definition of some variables used in the module
   $manage_package = $eye::bool_absent ? {
@@ -271,6 +281,19 @@ class eye (
     require => Class['eye::config']
   }
 
+  ### Manage the Plugin Dependencies
+  if $eye::bool_install_plugin_dependencies == true {
+    class { 'eye::dependencies':
+      require => Class['eye::config']
+    }
+  }
+
+  ### Include Eye Plugins
+  if $eye::bool_install_plugins == true {
+    class { 'eye::plugins':
+      require => Class['eye::config']
+    }
+  }
 
   ### Include custom class if $my_class is set
   if $eye::my_class {

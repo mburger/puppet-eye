@@ -23,7 +23,7 @@ class eye::service inherits eye {
   }
 
   case $eye::package_provider {
-    gem: {
+    gem, rbenv: {
       file { 'eye.initd':
         ensure  => $eye::manage_file,
         path    => $eye::initd_path,
