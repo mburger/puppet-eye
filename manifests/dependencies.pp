@@ -46,7 +46,7 @@ class eye::dependencies inherits eye {
       if !defined(Rbenv::Gem[radiustar]) {
         rbenv::gem { 'radiustar':
           ruby_version  => '2.0.0-p247',
-          gem_version   => '0.0.3',
+          version       => '0.0.3',
           notify        => $eye::manage_service_autorestart,
           noop          => $eye::bool_noops,
         }
