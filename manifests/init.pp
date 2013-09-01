@@ -107,7 +107,7 @@
 # [*noops*]
 #   Set noop metaparameter to true for all the resources managed by the module.
 #   Basically you can run a dryrun for this specific module if you set
-#   this to true. Default: false
+#   this to true. Default: undef
 #
 # Default class params - As defined in eye::params.
 # Note that these variables are mostly defined and used in the module itself,
@@ -210,7 +210,6 @@ class eye (
   $bool_puppi=any2bool($puppi)
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
-  $bool_noops=any2bool($noops)
   $bool_install_plugins=any2bool($install_plugins)
   $bool_install_plugin_dependencies=any2bool($install_plugin_dependencies)
 
@@ -308,7 +307,7 @@ class eye (
       ensure    => $eye::manage_file,
       variables => $classvars,
       helper    => $eye::puppi_helper,
-      noop      => $eye::bool_noops,
+      noop      => $eye::noops,
     }
   }
 
@@ -324,7 +323,7 @@ class eye (
         argument => $eye::process_args,
         tool     => $eye::monitor_tool,
         enable   => $eye::manage_monitor,
-        noop     => $eye::bool_noops,
+        noop     => $eye::noops,
       }
     }
   }
@@ -339,7 +338,7 @@ class eye (
       owner   => 'root',
       group   => 'root',
       content => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),
-      noop    => $eye::bool_noops,
+      noop    => $eye::noops,
     }
   }
 
