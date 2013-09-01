@@ -7,7 +7,7 @@ class eye::dependencies inherits eye {
           ensure    => $eye::manage_package,
           provider  => gem,
           notify    => $eye::manage_service_autorestart,
-          noop      => $eye::bool_noops,
+          noop      => $eye::noops,
         }
       }
       if !defined(Package[radiustar]) {
@@ -15,7 +15,7 @@ class eye::dependencies inherits eye {
           ensure    => $eye::manage_package,
           provider  => gem,
           notify    => $eye::manage_service_autorestart,
-          noop      => $eye::bool_noops,
+          noop      => $eye::noops,
         }
       }
       if !defined(Package[net-tftp]) {
@@ -23,7 +23,7 @@ class eye::dependencies inherits eye {
           ensure    => $eye::manage_package,
           provider  => gem,
           notify    => $eye::manage_service_autorestart,
-          noop      => $eye::bool_noops,
+          noop      => $eye::noops,
         }
       }
       if !defined(Package[opentsdb]) {
@@ -31,7 +31,7 @@ class eye::dependencies inherits eye {
           ensure    => $eye::manage_package,
           provider  => gem,
           notify    => $eye::manage_service_autorestart,
-          noop      => $eye::bool_noops,
+          noop      => $eye::noops,
         }
       }
     }
@@ -40,7 +40,7 @@ class eye::dependencies inherits eye {
         rbenv::gem { 'activerecord':
           ruby_version  => '2.0.0-p247',
           notify        => $eye::manage_service_autorestart,
-          noop          => $eye::bool_noops,
+          noop          => $eye::noops,
         }
       }
       if !defined(Rbenv::Gem[radiustar]) {
@@ -48,21 +48,21 @@ class eye::dependencies inherits eye {
           ruby_version  => '2.0.0-p247',
           version       => '0.0.3',
           notify        => $eye::manage_service_autorestart,
-          noop          => $eye::bool_noops,
+          noop          => $eye::noops,
         }
       }
       if !defined(Rbenv::Gem[net-tftp]) {
         rbenv::gem { 'net-tftp':
           ruby_version  => '2.0.0-p247',
           notify        => $eye::manage_service_autorestart,
-          noop          => $eye::bool_noops,
+          noop          => $eye::noops,
         }
       }
       if !defined(Rbenv::Gem[opentsdb]) {
         rbenv::gem { 'opentsdb':
           ruby_version  => '2.0.0-p247',
           notify        => $eye::manage_service_autorestart,
-          noop          => $eye::bool_noops,
+          noop          => $eye::noops,
         }
       }
     }

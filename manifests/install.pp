@@ -18,7 +18,7 @@ class eye::install inherits eye {
       package { $eye::package:
         ensure    => $eye::manage_package,
         provider  => $eye::package_provider,
-        noop      => $eye::bool_noops,
+        noop      => $eye::noops,
       }
     }
     rbenv: {

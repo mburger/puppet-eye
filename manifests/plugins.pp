@@ -10,7 +10,7 @@ class eye::plugins inherits eye {
     force   => $eye::bool_source_dir_purge,
     replace => $eye::manage_file_replace,
     audit   => $eye::manage_audit,
-    noop    => $eye::bool_noops,
+    noop    => $eye::noops,
   }
 
   file { 'eye.triggers.dir':
@@ -23,6 +23,6 @@ class eye::plugins inherits eye {
     force   => $eye::bool_source_dir_purge,
     replace => $eye::manage_file_replace,
     audit   => $eye::manage_audit,
-    noop    => $eye::bool_noops,
+    noop    => $eye::noops,
   }
 }

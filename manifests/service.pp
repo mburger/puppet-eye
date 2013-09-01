@@ -19,7 +19,7 @@ class eye::service inherits eye {
     enable     => $eye::manage_service_enable,
     hasstatus  => $eye::service_status,
     pattern    => $eye::process,
-    noop       => $eye::bool_noops,
+    noop       => $eye::noops,
   }
 
   case $eye::package_provider {
