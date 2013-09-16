@@ -33,11 +33,11 @@ class eye::params {
   }
 
   $process = $::operatingsystem ? {
-    default => 'eye',
+    default => 'ruby',
   }
 
   $process_args = $::operatingsystem ? {
-    default => '',
+    default => 'eye',
   }
 
   $process_user = $::operatingsystem ? {
