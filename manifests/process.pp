@@ -17,18 +17,20 @@ define eye::process (
     default => $name,
   }
 
-  case $config_hash['eye'] {
-    '', undef: {}
-    default: {
-      $eye_config_hash = $config_hash['eye']
-      $checks = $eye_config_hash['checks'] ? {
-        ''      => undef,
-        default => $eye_config_hash['checks']
-      }
+  if is_hash($config_hash) {
+    case $config_hash['eye'] {
+      '', undef: {}
+      default: {
+        $eye_config_hash = $config_hash['eye']
+        $checks = $eye_config_hash['checks'] ? {
+          ''      => undef,
+          default => $eye_config_hash['checks']
+        }
 
-      $triggers = $eye_config_hash['triggers'] ? {
-        ''      => undef,
-        default => $eye_config_hash['triggers']
+        $triggers = $eye_config_hash['triggers'] ? {
+          ''      => undef,
+          default => $eye_config_hash['triggers']
+        }
       }
     }
   }
